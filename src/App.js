@@ -1,12 +1,12 @@
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import { HelloWorld } from './components/HelloWorld';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Hello World!</p>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<HelloWorld/>}/>
+    </Routes>
   );
 }
 
