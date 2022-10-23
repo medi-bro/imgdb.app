@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { LoginButton } from "./logins/LoginButton"
 
 export const Navbar = () => {
   return (
@@ -12,6 +13,9 @@ export const Navbar = () => {
         </li>
         <li>
           <NavLink to="/About">About</NavLink>
+        </li>
+        <li>
+          <LoginButton/>
         </li>
       </ul>
     </nav>
