@@ -5,6 +5,7 @@ import { Navbar } from "./components/Navbar";
 import { HomePage } from "./components/tmphome";
 import { LoginsPage } from "./components/logins/LoginsPage";
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
+import { ConsultantsPage } from "./components/Consultants/ConsultantsPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginsPage />} />
+        <Route path="/consultants" element={<ConsultantsPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
