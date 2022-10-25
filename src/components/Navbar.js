@@ -9,10 +9,13 @@ export const Navbar = () => {
       </a>
       <ul className="Navbar-links">
         <li>
-          <NavLink to="/Homepage">Home</NavLink>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/About">About</NavLink>
+          <NavLink to="/about">About</NavLink>
+        </li>
+        <li>
+          <NavLink to="/cases">My Cases</NavLink>
         </li>
         <li>
           <LoginButton/>
