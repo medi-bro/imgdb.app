@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LoginButton } from "./logins/LoginButton"
+import { LoginButton } from "./logins/LoginButton";
 
 export const Navbar = () => {
   return (
@@ -9,7 +9,7 @@ export const Navbar = () => {
       </a>
       <ul className="Navbar-links">
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/Homepage">Home</NavLink>
         </li>
         <li>
           <NavLink to="/about">About</NavLink>
@@ -18,7 +18,7 @@ export const Navbar = () => {
           <NavLink to="/cases">My Cases</NavLink>
         </li>
         <li>
-          <LoginButton/>
+          <LoginButton />
         </li>
       </ul>
     </nav>
