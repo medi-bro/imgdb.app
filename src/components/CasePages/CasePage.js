@@ -1,75 +1,73 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import { db } from "../../firebase-access";
-import { Box, Button } from "@mui/material";
-import "./CasePage.css"
+import { Button } from "@mui/material";
+import { auth } from "../../firebase-access";
+import { onAuthStateChanged } from "firebase/auth"; 
+import "./CasePage.css";
 
-// When fetching user data, it assumes the user has an array containing the name of their cases (Case id from db)
-// When fetching cases, it assumes we have a collection named "Cases" in db
-// Still needs:
-// * Pass user id from login
-// * Navigate to path of caseview page
-// * CSS and styling
-
-export const CasePage = () => {
-
-    const ref = useRef(null);
-    let navigate = useNavigate(); 
-    const userRef = doc(db, "users", ""); // specific user id here from db
-    const [userData, getUserData] = useState([]); 
+// When fetching users, it assumes the user has an array of their cases (array named "cases" in user doc db)
+// Cases have a timestamp named "date" and string named "title" for case name (based from current example case in db)  
  
-    const fetchUserCases = async () => {
-        const documentSnapshot = await getDoc(userRef);
-        let holdData = [];
-        if (documentSnapshot.exists()) {
-            holdData = documentSnapshot.data().Cases;
-        } else {
-            alert("User does not exist");
-        }
-        getUserData([...holdData]);
-    };
-    useEffect(() => {
-        fetchUserCases();
-    },[]);
-
+export const CasePage = () => {
+    let navigate = useNavigate(); 
+    const [userDocs, getUserDocs] = useState([]); 
     const [cases, getCases] = useState([]);
-    const caseRef =  collection(db, "Cases"); // gather case collection from db (assuming there's one named "Cases")
+    const caseRef =  collection(db, "cases");
+ 
+    const fetchUserCases = async (userid) => {
+        const documentSnapshot = await getDoc(userid);
+        let caseArr = [];
+        if (documentSnapshot.exists()){
+            caseArr = documentSnapshot.data().cases;
+            getUserDocs([...caseArr]);
+        }
+    };
 
-    useEffect(() => {
-        const getCase = async () => {
+    const getCase = async () =>{
             const data = await getDocs(caseRef);
             getCases(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-        };
-        getCase();
-    },[]); 
+    }
 
     const routeCase = event => {
         //console.log(event.currentTarget.id);
-        navigate("/*", {/*state:{ caseName: event.currentTarget.id}*/}); //navigate to caseview here, passing the case name as value
+        navigate("/*", {/*state:{ caseName: event.currentTarget.id}*/});
     };
-    
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (currentUser) => {
+                    if(currentUser){
+                        const userID = doc(db, "users", currentUser.uid);
+                        fetchUserCases(userID);
+                        getCase();
+                    }else{
+                        navigate("/login"); 
+                    }
+                })
+    },[]);
+
     return (
         <div className = "mainDiv">
-            <h1 className = "header" >Cases:</h1>
-        <Box className = "boxContainer">  
-        {cases.map((caseCol) => {
-            for(let i = 0; i <= userData.length; i++)
-              if(caseCol.id === userData[i]){
+        <h1 className = "header" >Cases:</h1>
+        {cases.map((caseDoc) => {
+            for(let i = 0; i <= userDocs.length; i++){
+              if(caseDoc.id === userDocs[i]){
+                const date = new Date(caseDoc.date.seconds * 1000).toLocaleString('en-US');
                 return (
-                <>
-                <Button variant="contained" ref={ref} id = {caseCol.id} onClick={routeCase}
-                 style={{ width: '400px', height: '70px'}}>
-                Case: {/*caseCol.id*/} <br/> 
-                Date: {/*caseCol.Date*/} 
-                </Button>
-                <br/>
-                </>
-                ); 
+                    <div key = {caseDoc.id} className = "buttonDiv">
+                    <Button variant="contained" id = {caseDoc.id} onClick={routeCase} className = "button"
+                    style={{ fontSize: '16px' }} >
+                    Case: {caseDoc.title} <br/>
+                    Date: {date} 
+                    </Button>
+                    </div>
+                );
               }
+            }
           return null;
-          })}
-        </Box>
+          })
+        }
         </div>
     );
 }
