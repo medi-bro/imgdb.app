@@ -11,23 +11,24 @@ import "./CasePage.css";
 // Cases have a timestamp named "date" and string named "title" for case name (based from current example case in db)  
  
 export const CasePage = () => {
-    let navigate = useNavigate(); 
+    let navigate = useNavigate();
     const [userDocs, getUserDocs] = useState([]); 
     const [cases, getCases] = useState([]);
-    const caseRef =  collection(db, "cases");
- 
-    const fetchUserCases = async (userid) => {
-        const documentSnapshot = await getDoc(userid);
+    let   [flag, setFlag] = useState(0);
+
+    const fetchUserCases = async (uID) =>{
+        const documentSnapshot = await getDoc(uID);
         let caseArr = [];
-        if (documentSnapshot.exists()){
+        if (documentSnapshot.exists() && documentSnapshot.data().cases !== undefined){
             caseArr = documentSnapshot.data().cases;
             getUserDocs([...caseArr]);
         }
-    };
-
-    const getCase = async () =>{
-            const data = await getDocs(caseRef);
+        if(caseArr.length === 0){
+            setFlag(1); 
+        }else{
+            const data = await getDocs(collection(db, "cases"));
             getCases(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+        }
     }
 
     const routeCase = event => {
@@ -35,25 +36,28 @@ export const CasePage = () => {
         navigate("/*", {/*state:{ caseName: event.currentTarget.id}*/});
     };
 
-    useEffect(() => {
+    useEffect(() => { 
         onAuthStateChanged(auth, (currentUser) => {
-                    if(currentUser){
-                        const userID = doc(db, "users", currentUser.uid);
-                        fetchUserCases(userID);
-                        getCase();
-                    }else{
-                        navigate("/login"); 
-                    }
-                })
-    },[]);
+            if(currentUser){
+                const userID = doc(db, "users", currentUser.uid);
+                fetchUserCases(userID);
+            }else{
+                navigate("/login"); 
+            }
+        })
+    },[]); 
 
     return (
         <div className = "mainDiv">
         <h1 className = "header" >Cases:</h1>
-        {cases.map((caseDoc) => {
+        {flag? <h2>No Cases to display</h2> : cases.map((caseDoc) => {
             for(let i = 0; i <= userDocs.length; i++){
               if(caseDoc.id === userDocs[i]){
-                const date = new Date(caseDoc.date.seconds * 1000).toLocaleString('en-US');
+                try{
+                    var date = new Date(caseDoc.date.seconds * 1000).toLocaleString('en-US');
+                }catch{ 
+                    console.log("No date timestamp found for " + caseDoc.id);
+                }
                 return (
                     <div key = {caseDoc.id} className = "buttonDiv">
                     <Button variant="contained" id = {caseDoc.id} onClick={routeCase} className = "button"
