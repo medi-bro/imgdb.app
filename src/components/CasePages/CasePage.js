@@ -5,6 +5,7 @@ import { db } from "../../firebase-access";
 import { Button } from "@mui/material";
 import { auth } from "../../firebase-access";
 import { onAuthStateChanged } from "firebase/auth"; 
+import { Test } from "./caroTest.js";
 import "./CasePage.css";
 
 // When fetching users, it assumes the user has an array of their cases (array named "cases" in user doc db)
@@ -33,7 +34,7 @@ export const CasePage = () => {
 
     const routeCase = event => {
         //console.log(event.currentTarget.id);
-        navigate("/*", {/*state:{ caseName: event.currentTarget.id}*/});
+        navigate("/*", {state:{ caseName: event.currentTarget.id}});
     };
 
     useEffect(() => { 
@@ -50,7 +51,7 @@ export const CasePage = () => {
     return (
         <div className = "mainDiv">
         <h1 className = "header" >Cases:</h1>
-        {flag? <h2>No Cases to display</h2> : cases.map((caseDoc) => {
+        {flag? <h2>No Cases to display</h2>  : cases.map((caseDoc) => {
             for(let i = 0; i <= userDocs.length; i++){
               if(caseDoc.id === userDocs[i]){
                 try{
@@ -72,6 +73,8 @@ export const CasePage = () => {
           return null;
           })
         }
+       <p class="caseTitle-caro">Some Dynamic Title That changes on Caro Nav Event  </p>
+        <Test/> 
         </div>
     );
 }
