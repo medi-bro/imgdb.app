@@ -5,7 +5,7 @@ import { db } from "../../firebase-access";
 import { Button } from "@mui/material";
 import { auth } from "../../firebase-access";
 import { onAuthStateChanged } from "firebase/auth"; 
-import { Test } from "./caroTest.js";
+import { CaroScans } from "./CarouselScans";
 import "./CasePage.css";
 
 // When fetching users, it assumes the user has an array of their cases (array named "cases" in user doc db)
@@ -73,8 +73,7 @@ export const CasePage = () => {
           return null;
           })
         }
-       <p class="caseTitle-caro">Some Dynamic Title That changes on Caro Nav Event  </p>
-        <Test/> 
+        <CaroScans/> 
         </div>
     );
 }

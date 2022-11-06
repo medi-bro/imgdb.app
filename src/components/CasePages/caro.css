@@ -44,4 +44,9 @@ body {
   width:  650px;
   height: 650px;
 }
-
+.caro-case-title{
+   transform: translate(-600px,30px);
+}
+.caro-case-description{
+   transform: translate(-883px,30px)
+}
