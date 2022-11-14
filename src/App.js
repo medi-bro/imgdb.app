@@ -1,9 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { HelloWorld } from "./components/HelloWorld";
 import { Navbar } from "./components/Navbar";
 import { Homepage } from "./components/Homepage";
-import { LoginsPage } from "./components/logins/LoginsPage";
+import LoginsPage from "./components/logins/LoginsPage";
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 import { ConsultantsPage } from "./components/Consultants/ConsultantsPage";
 import { AboutPage } from "./components/tmpAbout";
