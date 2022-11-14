@@ -8,8 +8,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Sex, Gender, Roles } from "./FormConstants";
-import { validateFirstName, validateMiddleName, 
-    validateLastName, validateDateOfBirth, validateSex, validateGender, validateRole } from "./LoginsValidation";
+import { validateFirstName, validateMiddleName, validateLastName, validateDateOfBirth, validateSex, validateGender, validateRole } from "./LoginsValidation";
+import "./SetUpForm.css"
 
 
 export const SetUpForm = () => {
@@ -252,7 +252,7 @@ export const SetUpForm = () => {
                 </Select>
                 <FormHelperText>{roleHintText}</FormHelperText>
             </FormControl>
-            <Button id="sign-up" onClick={handleSetUp} variant="contained">Submit</Button>
+            <Button onClick={handleSetUp} variant="contained">Submit</Button>
         </div>
     );
 };
