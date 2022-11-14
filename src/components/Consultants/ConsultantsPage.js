@@ -11,7 +11,6 @@ export const ConsultantsPage = () => {
     const querySize = 20;
     
     const consultantsCollectionRef = collection(db, "consultants");
-    const tmpImage = "https://lh3.googleusercontent.com/a/ALm5wu3bR4cCcp4Y9b6p9VuKdTpzKGjA4NEwCIpry0B-=s83-c-mo";
     const [lastDoc, setLastDoc] = useState(null);
     const [consultants, setConsultants] = useState([]);
     const [showGetMoreButton, setShowGetMoreButton] = useState(false);
@@ -64,7 +63,7 @@ export const ConsultantsPage = () => {
                         <li key={consultant.uid}>
                             <ConsultantsView 
                                 consultantUid={consultant.uid} 
-                                imageUrl={tmpImage/*consultant.pictureUrl*/}
+                                imageUrl={consultant.pictureURL}
                                 name={consultant.displayName}
                                 specialty={consultant.specialty}
                                 fee={consultant.fee}
