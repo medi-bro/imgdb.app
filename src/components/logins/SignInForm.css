@@ -1,0 +1,33 @@
+#sign-in-form {
+    margin: auto;
+    padding: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    gap: 15px;
+}
+
+#sign-in-form h1 {
+    text-align: center;
+    padding: 5px;
+    font-size: 2.5em;
+}
+
+#sign-in-form .MuiFormControl-root {
+    width: inherit;
+}
+
+#sign-in-form button {
+    width: inherit;
+    height: 40px;
+}
+
+#sign-in  {
+    margin-top: 10px !important;
+}
+
+#sign-up-instead {
+    width: auto !important;
+}
