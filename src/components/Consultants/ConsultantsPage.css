@@ -17,3 +17,10 @@
 #consultants-page li {
     margin: 10px;
 }
+
+#more-consultants {
+    margin: auto;
+    display: block;
+    width: 400px;
+    height: 40px;
+}

@@ -77,7 +77,7 @@ const ConsultantsPage = () => {
                     );
                 })}
             </ul>
-            {showGetMoreButton ? <Button onClick={loadMoreConsultants}>See More</Button> : <></>}
+            {showGetMoreButton ? <Button id="more-consultants" onClick={loadMoreConsultants} variant="contained">See More</Button> : <></>}
         </div>
     );
 };
