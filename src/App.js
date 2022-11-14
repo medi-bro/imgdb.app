@@ -4,7 +4,7 @@ import { Navbar } from "./components/Navbar";
 import { Homepage } from "./components/Homepage";
 import LoginsPage from "./components/logins/LoginsPage";
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
-import { ConsultantsPage } from "./components/Consultants/ConsultantsPage";
+import ConsultantsPage from "./components/Consultants/ConsultantsPage";
 import { AboutPage } from "./components/tmpAbout";
 import { CasePage } from "./components/CasePages/CasePage";
 

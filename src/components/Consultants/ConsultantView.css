@@ -1,0 +1,74 @@
+.consultant-view {
+    border-radius: 8px; 
+    border: 2px solid dodgerblue;
+
+    padding: 15px;
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    grid-template-rows: auto 1fr;
+    min-width: 700px;
+}
+
+.consultant-view .consultant-image {
+    max-width: 150px;
+    max-height: 150px;
+    min-height: 150px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px 0px rgba(30, 144, 255, 0.50);
+    grid-area: 1 / 1 / 3 / 2;
+    align-self: center;
+    margin: auto;
+}
+
+.consultant-listing {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    grid-area: 1 / 2 / 2 / 4;
+    justify-content: space-between;
+    margin-left: 5px;
+    flex-wrap: wrap;
+}
+
+.consultant-name {
+    font-size: 2.5em;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.consultant-specialty {
+    font-size: 1.8em;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.consultant-fee {
+    font-size: 1.8em;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.consultant-description {
+    font-size: 1.2em;
+    min-width: 300px;
+
+    grid-column: 2;
+    grid-area: 2 / 2 / 3 / 3;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+.consultant-request {
+    grid-area: 2 / 3 / 3 / 4;
+    height: 50px;
+    align-self: end;
+    min-width: 200px !important;
+}
+
+.consultant-specialty-label,
+.consultant-fee-label {
+    font-size: .8em;
+}
