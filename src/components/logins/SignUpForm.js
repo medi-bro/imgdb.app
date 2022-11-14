@@ -3,6 +3,7 @@ import { auth } from "../../firebase-access";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { TextField, Button } from "@mui/material";
 import { validateEmail, validatePassword } from "./LoginsValidation";
+import "./SignUpForm.css"
 
 const proiderGoogle = new GoogleAuthProvider();
 const signInWithGoogle = () => {
@@ -76,7 +77,7 @@ const SignUpForm = (props) => {
                 />
             <Button id="sign-up" type="submit" onClick={handleSignUp}  variant="contained">Sign Up</Button>
             <Button onClick={signInWithGoogle} variant="contained">Sign Up With Google</Button>
-            <Button onClick={props.onPreferSignIn}>Sign In Instead</Button>
+            <Button id="sign-in-instead" onClick={props.onPreferSignIn}>Sign In Instead</Button>
         </div>
     );
 };
