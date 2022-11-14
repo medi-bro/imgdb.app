@@ -5,17 +5,29 @@ export const Homepage = () => {
     <>
       <section className="hmpage">
         <header className="start-header">
-          <h1 className="hmpage-hdr">Medical Direct</h1>
-          <Link to="/login">Login</Link>
-          <p></p>
-          <Link to="/consultants">Consultants</Link>
-          <p></p>
-          <img className="frst-image" src="/imgs/xray.jpg" alt=""></img>
+          <div className="home-banner">
+            <div className="home-banner-content">
+              <div className="bg">
+                <h1 className="hmpage-hdr">Medical Direct</h1>
+                <div className="homepage-links">
+                  <Link className="login-link" to="/login">
+                    Login
+                  </Link>
+                  <p></p>
+                  <Link className="consultants-link" to="/consultants">
+                    Consultants
+                  </Link>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </header>
         <div>
-          <div>
-            <div>
-              <h1>What do we do?</h1>
+          <div className="About-summary-parent">
+            <img className="frst-image" src="/imgs/xray.jpg" alt=""></img>
+            <div className="About-summary-child">
+              <h1 className="lore-summary-header">What do we do?</h1>
               <p className="lore-summary">
                 {" "}
                 Medical Direct provides quick access to imaging data to

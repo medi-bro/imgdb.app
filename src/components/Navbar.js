@@ -5,7 +5,7 @@ export const Navbar = () => {
   return (
     <nav className="nav">
       <a href="/" className="Logo">
-        Medical Direct
+        <img src="/imgs/md_logo.png" alt=""></img>
       </a>
       <ul className="Navbar-links">
         <li>
