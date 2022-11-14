@@ -3,8 +3,9 @@ import { auth } from "../../firebase-access";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import "./LoginButton.css"
 
-export const LoginButton = () => {
+const LoginButton = () => {
     const navigate = useNavigate();
 
     const [isUserSignedIn, setIsUserSignedIn] = useState(false);
@@ -48,5 +49,7 @@ export const LoginButton = () => {
         });
     }, [])
 
-    return(<Button id="login-button" onClick={handleOnClick} variant="contained">{buttonLabel}</Button>);
+    return(<Button id="login-button" onClick={handleOnClick}>{buttonLabel}</Button>);
 };
+
+export default LoginButton;

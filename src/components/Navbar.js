@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LoginButton } from "./logins/LoginButton";
+import LoginButton from "./logins/LoginButton";
 
 export const Navbar = () => {
   return (
