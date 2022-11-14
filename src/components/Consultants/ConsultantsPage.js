@@ -9,7 +9,7 @@ import "./ConsultantsPage.css"
 //a warning is disbled related to consitent updates
 
 const ConsultantsPage = () => {
-    const querySize = 1;
+    const querySize = 10;
     
     const consultantsCollectionRef = collection(db, "consultants");
     const [lastDoc, setLastDoc] = useState(null);
@@ -22,8 +22,7 @@ const ConsultantsPage = () => {
     };
 
     const loadMoreConsultants = () => {
-        if (!showGetMoreButton)
-            getConsultants(lastDoc);
+        getConsultants(lastDoc);
     }
 
     const getConsultants = (lastDoc) => {
@@ -37,7 +36,9 @@ const ConsultantsPage = () => {
         }
         getDocs(q)
             .then((data) => {
-                setConsultants(data.docs.map((doc) => ({...doc.data(), uid: doc.id})));
+                //following line preserves old items and merges with new while updating state
+                //can cause issues on recompile, requiring reload
+                setConsultants([...consultants, ...(data.docs.map((doc) => ({...doc.data(), uid: doc.id})))]);
                 setLastDoc(data.docs[data.docs.length-1]);
                 console.log(`${data.size} consultants found`)
                 if (data.size < querySize) {
@@ -53,7 +54,8 @@ const ConsultantsPage = () => {
     }
 
     useEffect(() => {
-        getConsultants(null);
+        if (consultants.length === 0)
+            getConsultants(null);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return(
