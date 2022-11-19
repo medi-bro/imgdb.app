@@ -9,16 +9,6 @@ export const Homepage = () => {
             <div className="home-banner-content">
               <div className="bg">
                 <h1 className="hmpage-hdr">Medical Direct</h1>
-                <div className="homepage-links">
-                  <Link className="login-link" to="/login">
-                    Login
-                  </Link>
-                  <p></p>
-                  <Link className="consultants-link" to="/consultants">
-                    Consultants
-                  </Link>
-                  <p></p>
-                </div>
               </div>
             </div>
           </div>
