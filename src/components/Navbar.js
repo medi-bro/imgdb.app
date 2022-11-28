@@ -19,6 +19,9 @@ export const Navbar = () => {
           <NavLink to="/cases">My Cases</NavLink>
         </li>
         <li>
+          <NavLink to="/consultants">Consultants</NavLink>
+        </li>
+        <li>
           <LoginButton />
         </li>
       </ul>
