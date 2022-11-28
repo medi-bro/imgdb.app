@@ -9,7 +9,7 @@ import "./ConsultantsPage.css"
 //a warning is disbled related to consitent updates
 
 const ConsultantsPage = () => {
-    const querySize = 10;
+    const querySize = 8;
     
     const consultantsCollectionRef = collection(db, "consultants");
     const [lastDoc, setLastDoc] = useState(null);
