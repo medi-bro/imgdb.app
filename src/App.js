@@ -5,7 +5,7 @@ import { Homepage } from "./components/Homepage";
 import LoginsPage from "./components/logins/LoginsPage";
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 import ConsultantsPage from "./components/Consultants/ConsultantsPage";
-import { AboutPage } from "./components/tmpAbout";
+import { AboutPage } from "./components/AboutPage";
 import { CasePage } from "./components/CasePages/CasePage";
 
 function App() {
