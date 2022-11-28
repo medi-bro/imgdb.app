@@ -1,0 +1,16 @@
+.case-listing-view {
+    border-radius: 8px; 
+    border: 2px solid dodgerblue;
+
+    padding: 10px;
+    margin: 5px;
+    margin-bottom: 15px;
+
+    min-width: 700px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-around;
+    font-size: 1.3em;
+}
