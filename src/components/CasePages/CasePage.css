@@ -53,3 +53,12 @@ body {
   width: 90%;
   height: auto;
 }
+
+#consultation-button-wrapper {
+  padding: 20px 0;
+}
+#consultation-button {
+  width: 200px;
+  margin: auto;
+  display: block;
+}
