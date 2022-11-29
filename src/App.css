@@ -112,8 +112,22 @@
 .About-us-lore-summary {
   display: flex;
   flex-direction: column;
-  padding-left: 40px;
   font-size: medium;
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.About-us-lore-summary h1 {
+  font-size: 2.2em;
+  margin-top: .5em;
+  margin-bottom: .1em;
+}
+
+.About-us-lore-summary p {
+  font-size: 1.2em;
+  margin-top: .5em;
+  margin-bottom: 1em;
 }
 
 .frst-image {

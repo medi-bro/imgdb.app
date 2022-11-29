@@ -2,23 +2,37 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../../firebase-access";
 import { collection, getDocs, query, where, limit, startAfter } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { Button } from "@mui/material";
+import { Button, Modal, Box } from "@mui/material";
 import ConsultantView from "./ConsultantView";
 import "./ConsultantsPage.css"
 
 //a warning is disbled related to consitent updates
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #005a9c',
+    boxShadow: 24,
+    p: 4,
+  };
 
 const ConsultantsPage = () => {
-    const querySize = 10;
+    const querySize = 8;
     
     const consultantsCollectionRef = collection(db, "consultants");
     const [lastDoc, setLastDoc] = useState(null);
     const [consultants, setConsultants] = useState([]);
     const [showGetMoreButton, setShowGetMoreButton] = useState(false);
     
+    const [showModal, setShowModal] = useState(false)
+    const openModal = () => setShowModal(true);
+    const closeModal = () => setShowModal(false);
     
     const handleOnClick = (consultantUid) => {
-        console.log(`Requesting consultation from uid:${consultantUid}`);
+        openModal();
     };
 
     const loadMoreConsultants = () => {
@@ -78,6 +92,13 @@ const ConsultantsPage = () => {
                 })}
             </ul>
             {showGetMoreButton ? <Button id="more-consultants" onClick={loadMoreConsultants} variant="contained">See More</Button> : <></>}
+            <Modal open={showModal} onClose={closeModal} hideBackdrop>
+                <Box sx={modalStyle} id="consultation-box">
+                    <h1>Second Opinion</h1>
+                    <p>After carefully reviewing your case, I can see that your original diagnosis was a mistake. I diagnose you with die!</p>
+                    <Button onClick={closeModal} variant="contained">Close</Button>
+                </Box>
+            </Modal>
         </div>
     );
 };

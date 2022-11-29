@@ -12,8 +12,7 @@ export const AboutPage = () => {
         out to create a new service that would make accessing vital patient
         imaging data easier, thus Medical Direct was born.
       </p>
-      <br />
-
+      
       <h1>What We Do</h1>
       <p>
         Medical Direct provides quick access to imaging data to patients,
