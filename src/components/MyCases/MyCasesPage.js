@@ -44,7 +44,6 @@ const MyCasesPage = () => {
                 <h1>My Cases</h1>
                 {(cases.length === 0) ? <h2>No Cases</h2> : <></>}
                 <ul id="case-listings">
-                    {console.log(cases)}
                     {cases.map((myCase) => {
                         return(
                             <li key={myCase.caseId}>
