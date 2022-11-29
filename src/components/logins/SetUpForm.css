@@ -1,0 +1,31 @@
+#set-up-form {
+    margin: auto;
+    padding: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    gap: 15px;
+}
+
+#set-up-form h1 {
+    text-align: center;
+    padding: 5px;
+    font-size: 2.5em;
+}
+
+#set-up-form .MuiFormControl-root {
+    width: inherit;
+    margin: 0px;
+}
+
+#set-up-form button {
+    width: 120px;
+    height: 40px;
+    margin-top: 10px !important;
+}
+
+#set-up-form .MuiFormHelperText-root {
+    color: #d32f2f;
+}

@@ -1,0 +1,24 @@
+#case-listing-page {
+    padding: 10px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+#case-listing-page h1 {
+    text-align: center;
+    font-size: 3em;
+}
+
+#case-listing-page h2 {
+    text-align: center;
+    font-size: 2em;
+}
+
+#case-listings {
+    list-style-type: none;
+    padding: 0px;
+}
+
+#case-listings li {
+    margin: 10px;
+}

@@ -1,75 +1,81 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
-import { db } from "../../firebase-access";
-import { Box, Button } from "@mui/material";
-import "./CasePage.css"
-
-// When fetching user data, it assumes the user has an array containing the name of their cases (Case id from db)
-// When fetching cases, it assumes we have a collection named "Cases" in db
-// Still needs:
-// * Pass user id from login
-// * Navigate to path of caseview page
-// * CSS and styling
-
-export const CasePage = () => {
-
-    const ref = useRef(null);
-    let navigate = useNavigate(); 
-    const userRef = doc(db, "users", ""); // specific user id here from db
-    const [userData, getUserData] = useState([]); 
+import { useNavigate, useParams } from 'react-router-dom';
+import { db, auth } from "../../firebase-access";
+import { onAuthStateChanged } from "firebase/auth"; 
+import ScanView from "./ScanView";
+import CaseView from "./CaseView";
+import "./CasePage.css";
  
-    const fetchUserCases = async () => {
-        const documentSnapshot = await getDoc(userRef);
-        let holdData = [];
-        if (documentSnapshot.exists()) {
-            holdData = documentSnapshot.data().Cases;
-        } else {
-            alert("User does not exist");
-        }
-        getUserData([...holdData]);
-    };
-    useEffect(() => {
-        fetchUserCases();
-    },[]);
+export const CasePage = () => {
+    const navigate = useNavigate();
+    const { caseId } = useParams(); //get case id from url
 
-    const [cases, getCases] = useState([]);
-    const caseRef =  collection(db, "Cases"); // gather case collection from db (assuming there's one named "Cases")
+    const [isAuth, setIsAuth] = useState(null);
+    const [userDocData, setUserDocData] = useState(null);
+    const [caseDocData, setCaseDocData] = useState(null);
+    const [scanDocsData, setScanDocsData] = useState(null);
 
     useEffect(() => {
-        const getCase = async () => {
-            const data = await getDocs(caseRef);
-            getCases(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-        };
-        getCase();
+        onAuthStateChanged(auth, (currentUser) => {
+            if(currentUser){
+                console.log(currentUser.uid);
+                if (userDocData === null)
+                    getDoc(doc(db, "users", currentUser.uid))
+                        .then((userDoc) => {
+                            setUserDocData(userDoc.data());
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                if (caseDocData === null)
+                    getDoc(doc(db, "cases", caseId))
+                        .then((caseDoc) => {
+                            if (caseDoc.exists() && caseDoc.data().patientId === currentUser.uid) {
+                                setIsAuth(true);
+                                setCaseDocData(caseDoc.data());
+                                getDocs(collection(db, "cases", caseDoc.id, "scans"))
+                                    .then((scansDocs) => {
+                                        setScanDocsData(scansDocs.docs.map(doc => doc.data()));
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
+                            }
+                            else {
+                                setIsAuth(false);
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+            }else{
+                navigate("/login");
+            }
+        })
     },[]); 
 
-    const routeCase = event => {
-        //console.log(event.currentTarget.id);
-        navigate("/*", {/*state:{ caseName: event.currentTarget.id}*/}); //navigate to caseview here, passing the case name as value
-    };
+    if (isAuth === true) {
+        return (
+            <div id="case-page">
+                <h1>Case</h1>
+                <div id="case-page-info">
+                    { scanDocsData===null ? <></> : <ScanView scanData={scanDocsData}/>}
+                    { caseDocData===null ? <></> : <CaseView caseData={caseDocData} userData={userDocData}/>}
+                </div>
+            </div>
+        );
+    }
+    else if (isAuth === false) {
+        return (
+            <div id="case-page">
+                <h1>Unauthorized</h1>
+                <p id="unauth-text">You do not have permission to look at this informaiton.</p>
+            </div>
+        );
+    }
+    else {
+        return(<></>);
+    }
     
-    return (
-        <div className = "mainDiv">
-            <h1 className = "header" >Cases:</h1>
-        <Box className = "boxContainer">  
-        {cases.map((caseCol) => {
-            for(let i = 0; i <= userData.length; i++)
-              if(caseCol.id === userData[i]){
-                return (
-                <>
-                <Button variant="contained" ref={ref} id = {caseCol.id} onClick={routeCase}
-                 style={{ width: '400px', height: '70px'}}>
-                Case: {/*caseCol.id*/} <br/> 
-                Date: {/*caseCol.Date*/} 
-                </Button>
-                <br/>
-                </>
-                ); 
-              }
-          return null;
-          })}
-        </Box>
-        </div>
-    );
 }

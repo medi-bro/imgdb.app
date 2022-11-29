@@ -2,28 +2,41 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../../firebase-access";
 import { collection, getDocs, query, where, limit, startAfter } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { Button } from "@mui/material";
-import { ConsultantsView } from "./ConsultantView";
+import { Button, Modal, Box } from "@mui/material";
+import ConsultantView from "./ConsultantView";
+import "./ConsultantsPage.css"
 
 //a warning is disbled related to consitent updates
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #005a9c',
+    boxShadow: 24,
+    p: 4,
+  };
 
-export const ConsultantsPage = () => {
-    const querySize = 20;
+const ConsultantsPage = () => {
+    const querySize = 8;
     
     const consultantsCollectionRef = collection(db, "consultants");
-    const tmpImage = "https://lh3.googleusercontent.com/a/ALm5wu3bR4cCcp4Y9b6p9VuKdTpzKGjA4NEwCIpry0B-=s83-c-mo";
     const [lastDoc, setLastDoc] = useState(null);
     const [consultants, setConsultants] = useState([]);
     const [showGetMoreButton, setShowGetMoreButton] = useState(false);
     
+    const [showModal, setShowModal] = useState(false)
+    const openModal = () => setShowModal(true);
+    const closeModal = () => setShowModal(false);
     
     const handleOnClick = (consultantUid) => {
-        console.log(`Requesting consultation from uid:${consultantUid}`);
+        openModal();
     };
 
     const loadMoreConsultants = () => {
-        if (!showGetMoreButton)
-            getConsultants(lastDoc);
+        getConsultants(lastDoc);
     }
 
     const getConsultants = (lastDoc) => {
@@ -37,7 +50,9 @@ export const ConsultantsPage = () => {
         }
         getDocs(q)
             .then((data) => {
-                setConsultants(data.docs.map((doc) => ({...doc.data(), uid: doc.id})));
+                //following line preserves old items and merges with new while updating state
+                //can cause issues on recompile, requiring reload
+                setConsultants([...consultants, ...(data.docs.map((doc) => ({...doc.data(), uid: doc.id})))]);
                 setLastDoc(data.docs[data.docs.length-1]);
                 console.log(`${data.size} consultants found`)
                 if (data.size < querySize) {
@@ -53,18 +68,20 @@ export const ConsultantsPage = () => {
     }
 
     useEffect(() => {
-        getConsultants(null);
+        if (consultants.length === 0)
+            getConsultants(null);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return(
         <div id="consultants-page">
+            <h1>Consultants</h1>
             <ul id="consultants-list">
                 {consultants.map((consultant) => {
                     return(
                         <li key={consultant.uid}>
-                            <ConsultantsView 
+                            <ConsultantView 
                                 consultantUid={consultant.uid} 
-                                imageUrl={tmpImage/*consultant.pictureUrl*/}
+                                imageUrl={consultant.pictureURL}
                                 name={consultant.displayName}
                                 specialty={consultant.specialty}
                                 fee={consultant.fee}
@@ -74,7 +91,16 @@ export const ConsultantsPage = () => {
                     );
                 })}
             </ul>
-            {showGetMoreButton ? <Button onClick={loadMoreConsultants}>See More</Button> : <></>}
+            {showGetMoreButton ? <Button id="more-consultants" onClick={loadMoreConsultants} variant="contained">See More</Button> : <></>}
+            <Modal open={showModal} onClose={closeModal} hideBackdrop>
+                <Box sx={modalStyle} id="consultation-box">
+                    <h1>Second Opinion</h1>
+                    <p>After carefully reviewing your case, I can see that your original diagnosis was a mistake. I diagnose you with die!</p>
+                    <Button onClick={closeModal} variant="contained">Close</Button>
+                </Box>
+            </Modal>
         </div>
     );
-}
+};
+
+export default ConsultantsPage;

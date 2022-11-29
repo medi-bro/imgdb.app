@@ -1,12 +1,64 @@
-.mainDiv{
-    width: 100%; 
-    text-align: center;
+#case-page {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
 }
-.header{
-    border-bottom: 5px solid gray;
+
+#case-page h1{
+  font-size: 2em;
+  margin: 20px;
+  text-align: center;
 }
-.boxContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+#case-page #unauth-info {
+  font-size: 1.3em;
+  text-align: center;
+}
+
+#case-page-info {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: auto;
+  padding-bottom: 50px;
+}
+
+#scan-info {
+  margin-top: 10px;
+  min-height: 150px;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper {
+  width: 800px;
+  height: 650px;
+  background: #fff;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-slide img {
+  width: 90%;
+  height: auto;
+}
+
+#consultation-button-wrapper {
+  padding: 20px 0;
+}
+#consultation-button {
+  width: 200px;
+  margin: auto;
+  display: block;
 }
